@@ -5,13 +5,15 @@ public class Employee {
 	private double _expenseLimit = NULL_EXPENSE;
 	private Project _primaryProject;
 	double getExpenseLimit() { 
+//		_primaryProject=null; 
 		_primaryProject=new Project(); 
-	    // ºñ¿ë ÇÑµµ¸¦ µÎµçÁö, ÁÖ¿ä ÇÁ·ÎÁ§Æ®¸¦ Á¤ÇØ¾ßÇÑ´Ù.
-	   return (_expenseLimit != NULL_EXPENSE) ?
+	    // ë¹„ìš©í•œë„ë¥¼ ë‘ë“ ì§€, ì£¼ìš”í”„ë¡œì íŠ¸ë¥¼ ì •í•´ì•¼í•œë‹¤.
+		assert(_expenseLimit != NULL_EXPENSE || _primaryProject != null);
+		return (_expenseLimit != NULL_EXPENSE) ?
 	       _expenseLimit:
 	       _primaryProject.getMemberExpenseLimit();
 	}
 	boolean withinLimit (double expenseAmount) {
-	   return (expenseAmount <= getExpenseLimit());
+		return (expenseAmount <= getExpenseLimit());
 	}
 }

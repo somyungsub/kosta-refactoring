@@ -2,16 +2,16 @@ package code.refactoring.general_2;
 
 public class JobItem {
 	
-	private Employee _employee;
+//	private Employee _employee;
 	private int _unitPrice;
 	private int _quantity;
 	private boolean _isLabor;
 
-	public JobItem(int unitPrice, int quantity, boolean isLabor, Employee employee) {
+	public JobItem(int unitPrice, int quantity) {
 		_unitPrice = unitPrice;
 		_quantity = quantity;
-		_isLabor = isLabor;
-		_employee = employee;
+//		_isLabor = isLabor;
+//		_employee = employee;
 	}
 	
 	public int getTotalPrice() {
@@ -19,14 +19,11 @@ public class JobItem {
 	}
 	
 	public int getUnitPrice() {
-		return (_isLabor) ? _employee.getRate() : _unitPrice;
+		return  _unitPrice;
 	}
 	
 	public int getQuantity() {
 		return _quantity;
 	}
 	
-	public Employee getEmployee() {
-		return _employee;
-	}
 }

@@ -5,11 +5,12 @@ public class Manager extends Employee {
 	private int _grade;
 	
 	public Manager (String name, String id, int grade) {
-		_name = name;
-		_id = id;
+//		_name = name;
+//		_id = id;
+		super(name, id);
 		_grade = grade;
-		
-		if (isPriviliged()) assignCar();   //  ¸ğµç ÇÏÀ§Å¬·¡½ºÀÇ °øÅë±â´É
+		initialize();// ëª¨ë“  í•˜ìœ„í´ë˜ìŠ¤ì˜ ê³µí†µ ê¸°ëŠ¥
+		   
 	}
 	
 	boolean isPriviliged() {

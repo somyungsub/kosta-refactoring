@@ -5,20 +5,22 @@ public class ControlFlag {
 	public ControlFlag() {}
 	
 	public void checkSecurity(String[] people) {
+		String found = findMiscreant(people);
+	}
+
+	private String findMiscreant(String[] people) {
 		String found = "";
 		for (int i = 0; i < people.length; i++) {
-			if (found.equals("")) {
-				if (people[i].equals("Don")) {
-					sendAlert(people[i]);
-					found = "Don";
-				}
-				if (people[i].equals("John")) {
-					sendAlert(people[i]);
-					found = "John";
-				}
+			if (people[i].equals("Don")) {
+				sendAlert(people[i]);
+				return "Don";
+			}
+			if (people[i].equals("John")) {
+				sendAlert(people[i]);
+				return "John";
 			}
 		}
-	
+		return found;
 	}
 
 	private void sendAlert(String user) {

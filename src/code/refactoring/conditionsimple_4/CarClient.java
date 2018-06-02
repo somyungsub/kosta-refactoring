@@ -12,24 +12,39 @@ public class CarClient {
 		
 		Scanner input = new Scanner(System.in);
 		int key = input.nextInt();
-		int currentSpeed = 0; 
-		  
+		Car car = null;
 		switch(key) {
 		case COMPACTCAR :
-			currentSpeed = currentSpeed + 10;
-			System.out.println("°æÂ÷°¡ ¼±ÅÃµÇ¾ú½À´Ï´Ù.");
+			car = new CompactCar();
 			break;
 		case SEDANCAR :
-			currentSpeed = currentSpeed + 20;
-			System.out.println("ÁßÇüÂ÷°¡ ¼±ÅÃµÇ¾ú½À´Ï´Ù.");
+			car = new SedanCar();
 			break;
 		case SPORTCAR :
-			currentSpeed = currentSpeed + 30;
-			System.out.println("½ºÆ÷Ã÷Ä«°¡ ¼±ÅÃµÇ¾ú½À´Ï´Ù.");
+			car = new SportCar();
 			break;
 		}
+		car.selectPrint();
+		System.out.println("ì„ íƒí•œ ìë™ì°¨ì˜ í˜„ì¬ì†ë„ëŠ” "+car.speedUP()+ " ì…ë‹ˆë‹¤.");
 		
-		System.out.println("¼±ÅÃÇÑ ÀÚµ¿Â÷ÀÇ ÇöÀç¼Óµµ´Â "+currentSpeed+ " ÀÔ´Ï´Ù.");
+//		int currentSpeed = 0; 
+//		switch(key) {
+//		case COMPACTCAR :
+//			currentSpeed = currentSpeed + 10;
+//			System.out.println("ê²½ì°¨ê°€ ì„ íƒë˜ì—ˆìŠµë‹ˆë‹¤.");
+//			break;
+//		case SEDANCAR :
+//			currentSpeed = currentSpeed + 20;
+//			System.out.println("ì¤‘í˜•ì°¨ì´ ì„ íƒë˜ì—ˆìŠµë‹ˆë‹¤..");
+//			break;
+//		case SPORTCAR :
+//			currentSpeed = currentSpeed + 30;
+//			System.out.println("ìŠ¤í¬ì¸ ì¹´ê°€ ì„ íƒë˜ì—ˆìŠµë‹ˆë‹¤");
+//			break;
+//		}
+//		System.out.println("ì„ íƒí•œ ìë™ì°¨ì˜ í˜„ì¬ì†ë„ëŠ” "+currentSpeed+ " ì…ë‹ˆë‹¤.");
+		
+		input.close();
 	}
 
 }

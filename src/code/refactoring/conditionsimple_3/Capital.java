@@ -11,13 +11,23 @@ public class Capital {
 	
 	public double getAdjustedCapital(double _income) {
 		double result = 0.0;
-		if (_capital > 0.0) {
-			if (_intRate > 0.0 && _duration > 0.0) {
-				result = (_income / _duration) * ADJ_FACTOR;
-			}
+		if(_capital <= 0.0) {
+			return result;
 		}
 		
-		return result;
+		if( _intRate <= 0.0 || _duration <= 0.0) {
+			return result;
+		}
+		return (_income / _duration) * ADJ_FACTOR;
+//		if (isAdjust()) {
+//			result = (_income / _duration) * ADJ_FACTOR;
+//			return (_income / _duration) * ADJ_FACTOR;
+//		}
+//		return result;
+	}
+
+	private boolean isAdjust() {
+		return _capital > 0.0 && _intRate > 0.0 && _duration > 0.0;
 	}
 	
 	

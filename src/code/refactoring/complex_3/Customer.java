@@ -21,51 +21,58 @@ public class Customer {
 	}
 	
 	public String statement() {
-		double totalAmount = 0;
-		int frequentRenterPoints = 0;
+//		double totalAmount = 0;
+//		int frequentRenterPoints = 0;
+		double thisAmount = 0;
 		Enumeration rentals = _rentals.elements();
-		String result = getName() + " °í°´´ÔÀÇ ´ë¿©±â·Ï\n";
+		String result = getName() + " ê³ ê°ë‹˜ì˜ ëŒ€ì—¬ê¸°ë¡ \n";
 		
 		while (rentals.hasMoreElements()) {
-			double thisAmount = 0;
 			Rental each = (Rental)rentals.nextElement();
 			
-			// ºñµğ¿À Á¾·ùº° ´ë¿©·á °è»ê
-			switch(each.getMovie().getPriceCode()) {
-			case Movie.REQULAR:
-				thisAmount += 2;
-				if(each.getDaysRented() > 2)
-					thisAmount += (each.getDaysRented()-2) * 1.5;
-				break;
-			case Movie.NEW_RELEASE:
-				thisAmount += (each.getDaysRented()) * 3;
-				break;
-			case Movie.CHILDERNS:
-				thisAmount += 1.5;
-				if(each.getDaysRented() > 3)
-					thisAmount += (each.getDaysRented()-3) * 1.5;
-				break;
-			}
-			// Àû¸³ Æ÷ÀÎÆ®¸¦ 1 Æ÷ÀÎÆ® Áõ°¡
-			frequentRenterPoints ++;
-			//ÃÖ½Å¹°À» ÀÌÆ²ÀÌ»ó ´ë¿©ÇÏ¸é º¸³Ê½ºÆ÷ÀÎÆ® Áö±Ş
-			if((each.getMovie().getPriceCode() == Movie.NEW_RELEASE) && each.getDaysRented() > 1)
-				frequentRenterPoints ++;
+			// ë¹„ë””ì˜¤ ì¢…ë¥˜ë³„ ëŒ€ì—¬ë£Œ ê³„ì‚°
+			thisAmount = each.getRentalCharge();
 			
-			//ÀÌ¹ø¿¡ ´ë¿©ÇÏ´Â ºñµğ¿ÀÁ¤º¸¿Í ´ë¿©·á¸¦ Ãâ·Â
+			// ì ë¦½í¬ì¸íŠ¸ë¥¼ 1í¬ì¸íŠ¸ ì¦ê°€
+//			frequentRenterPoints += each.getFrequentPoint();
+			
+			// ì´ë²ˆì— ëŒ€ì—¬í•˜ëŠ” ë¹„ë””ì˜¤ ì •ë³´ì™€ ëŒ€ì—¬ë£Œë¥¼ ì¶œë ¥
 			result += "\t" + each.getMovie().getTitle()+ "\t" + String.valueOf(thisAmount) + "\n";
-			//ÇöÀç±îÁö ´©ÀûµÈ ÃÑ ´ë¿©·á
-			totalAmount += thisAmount;
-			//ÇªÅÍÇà Ãß°¡
-			result += "´©Àû ´ë¿©·á: " + String.valueOf(totalAmount) + "\n";
-			result += "Àû¸³ Æ÷ÀÎÆ®: " + String.valueOf(frequentRenterPoints) + "\n";
+			
+			// í˜„ì¬ê¹Œì§€ ëˆ„ì ëœ ì´ëŒ€ì—¬ë£Œ 
+//			totalAmount += thisAmount;
+			
+			// í‘¸í„°í–‰ ì¶”ê°€
+//			result += "ëˆ„ì  ëŒ€ì—¬ë£Œ: " + String.valueOf(totalAmount) + "\n";
+//			result += "ì ë¦½ í¬ì¸íŠ¸ : " + String.valueOf(frequentRenterPoints) + "\n";
 			return result;
-			
-			
 		}
-		
-		
+		result += "ëˆ„ì  ëŒ€ì—¬ë£Œ: " + String.valueOf(getTotalCharge()) + "\n";
+		result += "ì ë¦½ í¬ì¸íŠ¸ : " + String.valueOf(getFrequentPoint()) + "\n";
 		return _name;
 	}
+	
+	// ì´ ëŒ€ì—¬ë£Œ ê³„ì‚° (ì™¸ë¶€ì ‘ê·¼ê°€ëŠ¥)
+	public double getTotalCharge() {
+		double totalCharge = 0;
+		Enumeration rentals = _rentals.elements();
+		while (rentals.hasMoreElements()) {
+			Rental each = (Rental)rentals.nextElement();
+			// ë¹„ë””ì˜¤ ì¢…ë¥˜ë³„ ëŒ€ì—¬ë£Œ ê³„ì‚°
+			totalCharge += each.getRentalCharge();
+		}
+		return totalCharge;
+	}
 
+	// ì´ í¬ì¸íŠ¸ ê³„ì‚° (ì™¸ë¶€ì ‘ê·¼ê°€ëŠ¥)
+	public double getFrequentPoint() {
+		int frequentRenterPoints = 0;
+		Enumeration rentals = _rentals.elements();
+		while (rentals.hasMoreElements()) {
+			Rental each = (Rental)rentals.nextElement();
+			// ë¹„ë””ì˜¤ ì¢…ë¥˜ë³„ í¬ì¸íŠ¸ ê³„ì‚°
+			frequentRenterPoints += each.getFrequentPoint();
+		}
+		return frequentRenterPoints;
+	}
 }

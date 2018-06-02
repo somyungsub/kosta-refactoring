@@ -4,27 +4,33 @@ import java.util.EmptyStackException;
 import java.util.Stack;
 
 public class ResourcePool {
-
 	Stack _available;
 	Stack _allocated;
-	
-	ResourcePool(){
-		  _available=new Stack();
-		  _allocated=new Stack();
+
+	ResourcePool() {
+		_available = new Stack();
+		_allocated = new Stack();
 	}
-	
-   Resource getResource() {
-       Resource result;
-       
-       try {
-    	   result = (Resource)_available.pop();
-    	   _allocated.push(result);
-    	   return result;
-       } catch (EmptyStackException e) {
-    	   result = new Resource();
-    	   _allocated.push(result);
-    	   return result;
-       }
-       // Resource °í°¥À» ¿¹±âÄ¡¸øÇÑ ÀÏÀÌ ¾Æ´Ï¹Ç·Î ¿¹¿ÜÃ³¸®¸¦ »ç¿ëÇÏÁö ¾Ê´Â °ÍÀÌ ÁÁÀ½
-   }
+
+	Resource getResource() {
+		Resource result;
+		if(_available.isEmpty()) {
+			result = new Resource();
+		}
+		else {
+			result = (Resource) _available.pop();
+			_allocated.push(result);
+		}
+		return result;
+//		try {
+//			result = (Resource) _available.pop();
+//			_allocated.push(result);
+//			return result;
+//		} catch (EmptyStackException e) {
+//			result = new Resource();
+//			_allocated.push(result);
+//			return result;
+//		}
+		// Resource ê³ ê°ˆì„ ì˜ˆê¸°ì¹˜ ëª»í•œ ì¼ì´ ì•„ë‹ˆë¯€ë¡œ ì˜ˆì™¸ì²˜ë¦¬ë¥¼ ì‚¬ìš©í•˜ì§€ ì•ŠëŠ” ê²ƒì´
+	}
 }

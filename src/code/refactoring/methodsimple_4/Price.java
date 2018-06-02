@@ -10,20 +10,19 @@ public class Price {
 		this._itemPrice = itemPrice;
 	}
 	public double getPrice() {
-		int basePrice = _quantity * _itemPrice;
-		int discountLevel;
-		
-		if (_quantity > 100) discountLevel = 2;
-		else discountLevel = 1;
-		
-		double finalPrice = discountedPice(basePrice, discountLevel);
-		
-		return finalPrice;
+		return discountedPice();
 	}
 
-	private double discountedPice(int basePrice, int discountLevel) {
-		if (discountLevel == 2) return basePrice * 0.1;
-		else return basePrice * 0.05;
+	private double discountedPice() {
+		if (_quantity > 100)
+			return getBasePrice() * 0.1;
+		else
+			return getBasePrice() * 0.05;
 	}
+	
+	private int getBasePrice() {
+		return _quantity * _itemPrice;
+	}
+	
 
 }

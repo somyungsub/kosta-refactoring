@@ -6,7 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class PriceTest {
-
 	@Test
 	public void testGetPrice() {
 		Price price = new Price(10, 50);

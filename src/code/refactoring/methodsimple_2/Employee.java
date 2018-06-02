@@ -4,14 +4,19 @@ public class Employee {
 
 	private double salary=100;
 	
-	void tenPercentRaise () {
-		salary *= 1.1;
-		System.out.println("tenPercentRaise --> " + salary );
-	}
-
-	void fivePercentRaise () {
-		salary *= 1.05;
-		System.out.println("fivePercentRaise --> " + salary );
+//	void tenPercentRaise () {
+//		salary *= 1.1;
+//		System.out.println("tenPercentRaise --> " + salary );
+//	}
+//
+//	void fivePercentRaise () {
+//		salary *= 1.05;
+//		System.out.println("fivePercentRaise --> " + salary );
+//	}
+	
+	void percentRaise(double factor) {
+		salary *= (1+factor);
+		System.out.println("PercentRaise --> "+salary);
 	}
 	
 	double baseCharge() {

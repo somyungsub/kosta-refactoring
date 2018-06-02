@@ -5,10 +5,11 @@ import java.util.Enumeration;
 import java.util.Vector;
 
 public class Account {
+	
 	Vector _entries = new Vector();
-
-	// µÎ ³¯Â¥ »çÀÌÀÇ °èÁÂÀÔÃâ±İ ÇöÈ²À» ¾Ë¾Æ³»´Â ¸Ş¼­µå
-	double getFlowBetween (Date start, Date end) {
+	
+	// ë‘ ë‚ ì§œ ì‚¬ì´ì˜ ê³„ì¢Œ ì…ì¶œê¸ˆ í˜„í™©ì„ ì•Œì•„ë‚´ëŠ” ë©”ì„œë“œ
+	double getFlowBetween (DateRange dateRange) {
 		double result = 0;
 		_entries.addElement(new Entry(10, new Date(2016, 1, 2)));
 		_entries.addElement(new Entry(20, new Date(2016, 1, 3)));
@@ -18,13 +19,33 @@ public class Account {
 
 		while (e.hasMoreElements()) {
 			Entry each = (Entry) e.nextElement();
-			if (each.getDate().equals(start) ||
-					each.getDate().equals(end) ||
-					(each.getDate().after(start) && each.getDate().before(end)))
+			if (dateRange.includes(each.getDate()))
 			{
 				result += each.getValue();
 			}
 		}
 		return result;
 	}
+	
+	
+//	double getFlowBetween (Date start, Date end) {
+//		double result = 0;
+//		_entries.addElement(new Entry(10, new Date(2016, 1, 2)));
+//		_entries.addElement(new Entry(20, new Date(2016, 1, 3)));
+//		_entries.addElement(new Entry(30, new Date(2016, 1, 4)));
+//		
+//		Enumeration e = _entries.elements();
+//		
+//		while (e.hasMoreElements()) {
+//			Entry each = (Entry) e.nextElement();
+//			if (each.getDate().equals(start) ||
+//					each.getDate().equals(end) ||
+//					(each.getDate().after(start) && each.getDate().before(end)))
+//			{
+//				result += each.getValue();
+//			}
+//		}
+//		return result;
+//	}
+
 }

@@ -1,14 +1,14 @@
 package code.refactoring.general_4;
 
-public class MemberInfoImpl {
+public class MemberInfoImpl implements IMemberInfo{
 
 	public void searchInform(String name, String phoneNum) {
-		System.out.println(name + " »ç¿ëÀÚÀÇ Á¤º¸¸¦ Ã£¾Ò½À´Ï´Ù.");
+		System.out.println(name + " ì‚¬ìš©ìì˜ ì •ë³´ë¥¼ ì°¾ì•˜ìŠµë‹ˆë‹¤.");
 		
 	}
 
 	public void runService(int memberID, int requestID) {
-		System.out.println(memberID + " ´ÔÀÇ ¿äÃ» ¼­ºñ½º¸¦ ¼öÇàÇÕ´Ï´Ù.");
+		System.out.println(memberID + " ë‹˜ì˜ ìš”ì²­ ì„œë¹„ìŠ¤ë¥¼ ìˆ˜í–‰í•©ë‹ˆë‹¤.");
 		
 	}
 

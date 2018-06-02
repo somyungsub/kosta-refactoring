@@ -1,133 +1,84 @@
 package code.refactoring.complex_4;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/*
+ * ë³€ê²½ë¶€ -> ì˜¤ë²„ë¼ì´ë”© êµ¬í˜„
+ */
 public class UserDAO {
 	
-	public Connection getConnection() {
-		
-		String url = "url";
-		String id = "id";
-		String pw = "password";
-		
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			return DriverManager.getConnection(url, id, pw);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			return null;
-		}
-	}
-	
-	// ¹®Á¦Á¡ 
-	// Áßº¹ÄÚµå - QUery ¿Í ÀÎÀÚµé •û°í´Â ¸ğµç ³»¿ëÀÌ Áßº¹ÀÌ ¹ß»ıµÊ
-	// º¯°æÀÌ µÇ´Â ºÎºĞ°ú º¯°æÀÌ µÇÁö¾Ê´Â ºÎºĞÀ¸·Î ºĞ¸®
+	// ë¬¸ì œì  
+	// ì¤‘ë³µì½”ë“œ - QUery ì™€ ì¸ìë¥¼ ëº´ê³ ëŠ” ëª¨ë“ ë‚´ìš©ì´ ì¤‘ë³µ ë°œìƒë¨
+	// ë³€ê²½ì´ ë˜ëŠ” ë¶€ë¶„ê³¼ ë³€ê²½ì´ ë˜ì§€ ì•ŠëŠ” ë¶€ë¶„ìœ¼ë¡œ ë¶„ë¦¬
 	
 	public void addUser(UserVO userVO) throws SQLException {
-		String sql = "insert into USERS values(?,?,?,?)";
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		
-		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, userVO.getUserId());
-			pstmt.setString(2, userVO.getPassword());
-			pstmt.setString(3, userVO.getName());
-			pstmt.setString(3, userVO.getEmail());
+		String sql = "insert into USERS values (?,?,?,?) ";
+		JdbcTemplate jdbcTemplate = new JdbcTemplate() {
 			
-			pstmt.executeUpdate();		
-			
-		} finally {
-			if(pstmt != null) {
-				pstmt.close();
+			@Override
+			public void setParameters(PreparedStatement pstmt) throws SQLException {
+				pstmt.setString(1, userVO.getUserId());
+				pstmt.setString(2, userVO.getPassword());
+				pstmt.setString(3, userVO.getName());
+				pstmt.setString(3, userVO.getEmail());				
 			}
-			
-			if(conn != null) {
-				conn.close();
-			}
-		}
+		};
+		jdbcTemplate.addUser(sql);
 	}
 
 	public void removeUser(String userId) throws SQLException {
 		String sql = "delete from USERS where userId = ?";
-		Connection conn = null;
-		PreparedStatement pstmt = null;
 		
-		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, userId);
-			
-			pstmt.executeUpdate();		
-			
-		} finally {
-			if(pstmt != null) {
-				pstmt.close();
+		JdbcTemplate jdbcTemplate = new JdbcTemplate() {
+
+			@Override
+			public void setParameters(PreparedStatement pstmt) throws SQLException {
+				pstmt.setString(1, userId);
 			}
-			
-			if(conn != null) {
-				conn.close();
-			}
-		}
+		};
+		jdbcTemplate.removeUser(sql);
 	}
 
 	public void updateUser(UserVO updateUserVO) throws SQLException {
 		String sql = "update USERS set password = ?, name = ?, email = ? where userId = ?";
-		Connection conn = null;
-		PreparedStatement pstmt = null;
 		
-		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, updateUserVO.getPassword());
-			pstmt.setString(2, updateUserVO.getName());
-			pstmt.setString(3, updateUserVO.getEmail());
-			pstmt.setString(4, updateUserVO.getUserId());
+		JdbcTemplate jdbcTemplate = new JdbcTemplate() {
 			
-			pstmt.executeUpdate();		
-
-		} finally {
-			if(pstmt != null) {
-				pstmt.close();
+			@Override
+			public void setParameters(PreparedStatement pstmt) throws SQLException {
+				pstmt.setString(1, updateUserVO.getPassword());
+				pstmt.setString(2, updateUserVO.getName());
+				pstmt.setString(3, updateUserVO.getEmail());
+				pstmt.setString(4, updateUserVO.getUserId());
 			}
 			
-			if(conn != null) {
-				conn.close();
-			}
-		}
-		
+		};
+		jdbcTemplate.executeUpdate(sql);
 	}
 	
-	public UserVO findByUserId(String userId) throws SQLException {
+	public Object findByUserId(String userId) throws SQLException {
 		String sql = "select * from USERS where userId = ?";
-		
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		
-		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, userId);
+		JdbcTemSelect jdbcTemplate = new JdbcTemSelect() {
+
+			@Override
+			public void setParameters(PreparedStatement pstmt) throws SQLException {
+				pstmt.setString(1, userId);
+			}
+
+			@Override
+			public UserVO mapRow(ResultSet rs) throws SQLException {
+				if (!rs.next())
+					return null;
 			
-			pstmt.executeQuery();		
-			
-			if (!rs.next()) return null;
-			
-			return new UserVO(rs.getString("userId"),
+				return new UserVO(rs.getString("userId"),
 								rs.getString("password"),
 								rs.getString("name"),
 								rs.getString("email"));
-		} finally {
-			if (rs != null) rs.close();
-			if (pstmt!= null) pstmt.close();
-			if (conn != null) conn.close();
-		}
+			}
+			
+		};
+		return (UserVO)jdbcTemplate.executeQuery(sql);
 	}
-
 }
